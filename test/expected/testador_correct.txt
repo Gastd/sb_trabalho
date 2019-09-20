@@ -1,0 +1,68 @@
+Teste1 OK
+Teste2 OK
+Teste3 OK
+Teste4 OK
+Teste5 OK
+Teste6 OK
+Teste7 OK
+Teste8 OK
+Teste9 OK
+Teste10 OK
+Teste11 OK
+Teste12 OK
+Teste13 OK
+Teste14 OK
+Teste15 OK
+Teste16 OK
+Teste17 OK
+Teste18 OK
+Teste19 OK
+Teste20 OK
+Teste21 OK
+Teste22 OK
+Teste23 OK
+Teste24 OK
+Teste25 OK
+Teste26 OK
+Teste27 OK
+Teste28 OK
+Teste29 OK
+Teste30 OK
+Teste31 OK
+
+SYSCALL EXIT
+R[0] = 0x00000000
+R[1] = 0xffffffff
+R[2] = 0x0000000a
+R[3] = 0x00000000
+R[4] = 0x00002006
+R[5] = 0x0000001f
+R[6] = 0x00000000
+R[7] = 0x00000000
+R[8] = 0x00002000
+R[9] = 0xffffffff
+R[10] = 0xffffffff
+R[11] = 0x00000001
+R[12] = 0x00000000
+R[13] = 0x00000000
+R[14] = 0x00000000
+R[15] = 0x00000000
+R[16] = 0x00000000
+R[17] = 0x00000000
+R[18] = 0x00000000
+R[19] = 0x00000000
+R[20] = 0x00000000
+R[21] = 0x00000000
+R[22] = 0x00000000
+R[23] = 0x00000000
+R[24] = 0x00000000
+R[25] = 0x00000000
+R[26] = 0x00000000
+R[27] = 0x00000000
+R[28] = 0x00001800
+R[29] = 0x00003ffc
+R[30] = 0x00000000
+R[31] = 0x00000484
+pc = 0x0000048c
+hi = 0x00000002
+lo = 0x02222222
