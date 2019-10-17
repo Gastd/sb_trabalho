@@ -19,18 +19,16 @@ BIN_DIR = bin
 OBJ_DIR = obj
 TEST_DIR = test
 EXPCT_DIR= $(TEST_DIR)/expected
-TARGET  = $(BIN_DIR)/simulator
+TARGET  = $(BIN_DIR)/assembler
 
 # Include directories
 INC_DIR    = include/
 
 # Source
-# CLIENT_SRC_DIR = src/
-# CLIENT_SRC     = WrapperBaseDriver.cpp SimpleParser.cpp CarState.cpp CarControl.cpp
-SRC         = simulator.cpp
+SRC         = assembler.cpp
 MAIN        = main
 SRC_DIR     = src
-MAIN_SRC    = main.cpp
+MAIN_SRC    = main_asm.cpp
 # SRC         = $(notdir $(wildcard $(SRC_DIR)/*.cpp))
 
 ############
@@ -71,8 +69,8 @@ $(TARGET): dirs $(OBJ) $(MAIN_OBJ) $(BIN_DIR)
 clean:
 	@rm -rf $(OBJ_DIR)/*.o $(BIN_DIR)/* *.txt
 
-.PHONY = test_simulator
-test_simulator: all test_prime test_fibonacci test_testador
+.PHONY = test_assembler
+test_assembler: all test_prime test_fibonacci test_testador
 
 test_prime:
 	@echo "Rodando teste de numeros primos"
