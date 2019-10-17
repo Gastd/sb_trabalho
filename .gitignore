@@ -1,6 +1,10 @@
 bin/
 obj/
 
+*.pre
+*.asm
+*.obj
+
 fibonacci_output.txt
 primos_output.txt
 testador_output.txt 
