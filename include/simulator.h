@@ -45,7 +45,7 @@ private:
     uint16_t pc, ri; // hi, lo;
     int16_t acc;    // Accumulator
     // fields of R, I and J formats
-    // int16_t opcode, rs, rt, rd, shamt, funct, kte16;
+    int16_t opcode;//, rs, rt, rd, shamt, funct, kte16;
     // uint16_t kte26;
 
     void printExecute();
@@ -60,9 +60,9 @@ private:
 
     enum OPCODES
     {
-        ADD=01,   SUB=02,   MUL=03,   DIV=04,
-        JMP=05,   JMPN=06,  JMPP=07,  JMPZ=08,
-        COPY=09,  LOAD=10,  STORE=11, INPUT=12,
+        ADD=1,    SUB=2,    MUL=3,    DIV=4,
+        JMP=5,    JMPN=6,   JMPP=7,   JMPZ=8,
+        COPY=9,   LOAD=10,  STORE=11, INPUT=12,
         OUTPUT=13,STOP=14
     };
 
