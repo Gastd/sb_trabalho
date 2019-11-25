@@ -55,7 +55,7 @@ vector<string> Apenas_Tokens(string linha)
 }
 
 
-void Montador(string Nome_Arquivo_Entrada, string Nome_Original)
+void Montador(const string& Nome_Arquivo_Entrada, const string& Nome_Original)
 {
 	ofstream fout;
 	ofstream fouta;
@@ -64,7 +64,7 @@ void Montador(string Nome_Arquivo_Entrada, string Nome_Original)
 	string buf; 
 	string Aux_EQU;
 	string Aux;
-	string Aux_JUMP;
+	// string Aux_JUMP;
 	string Aux3;
 	string Aux4;
 	string Aux5;
@@ -80,8 +80,8 @@ void Montador(string Nome_Arquivo_Entrada, string Nome_Original)
 	vector<string> Restante;
 	vector<string> Nomes_macro;
 	vector<string> linha_completa;
-	vector<string> var_equ;
-	vector<string> val_equ;
+	// vector<string> var_equ;
+	// vector<string> val_equ;
 	vector<string> final;
 	vector<string> val_EQU;
 	vector<string> var_EQU;
@@ -168,7 +168,7 @@ void Montador(string Nome_Arquivo_Entrada, string Nome_Original)
 			/////////////////Reirando os Tab's///////////////
 			/////////////////////////////////////////////////
 			
-			char espaco[] = "	";
+			char espaco[] = "\t";
 			for (i = 0; i < strlen(espaco); ++i)
 		   {
 		      linha.erase (remove(linha.begin(), linha.end(), espaco[i]), linha.end());
@@ -373,7 +373,6 @@ void Montador(string Nome_Arquivo_Entrada, string Nome_Original)
 								Cod.pop_back();
 							}
 							goto continuar_2;
-						
 						}
 						if(ha_rotulo == 0)
 						{
@@ -1170,10 +1169,6 @@ if(Cod.size() > 2)								//Para não tentar ler elementos que não existem caso o
 /////////////e se o CONST não está sendo alterado////////////
 /////////////////////////////////////////////////////////////
 
-
-			
-			
-
 for(i=0;i<Cod.size();i++)
 {
 	if(Cod[i] == "MULT" || Cod[i] == "DIV" || Cod[i] == "ADD" || Cod[i] == "SUB" || Cod[i] == "LOAD" || Cod[i] == "OUTPUT")
@@ -1872,15 +1867,13 @@ if(Modulo == 1)
 }
 else
 {
-			ofstream fout;
-		fout.open(Nome_Original + ".obj");
+	ofstream fout;
+	fout.open(Nome_Original + ".obj");
 		
-			
-		for(i=0;i<Cod.size();i++)
-		{
-			fout<<Cod[i]<<" ";
-		}
-
+	for(i=0;i<Cod.size();i++)
+	{
+		fout<<Cod[i]<<" ";
+	}
 }
 
 
@@ -1982,7 +1975,8 @@ int main(int argc, char* argv[])
     
     // Argumentos de Entrada
 	Nome_Original = argv[1];
-	Nome_Arquivo_Entrada = Nome_Original + ".asm";              
+	Nome_Arquivo_Entrada = Nome_Original + ".asm";
+	cout << "opening " << Nome_Arquivo_Entrada << endl;
 
 	Montador(Nome_Arquivo_Entrada, Nome_Original);
     
