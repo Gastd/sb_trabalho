@@ -4,6 +4,8 @@ obj/
 *.pre
 *.asm
 *.obj
+*.o
+*.elf
 
 fibonacci_output.txt
 primos_output.txt
