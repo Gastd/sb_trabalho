@@ -4,12 +4,12 @@ Unversidade de Brasilia
 Instituto de Ciências Exatas
 Departamento de Ciencia da Computaçao
 Software Básico - 2/2019
-Trabalho I - Simulador e Montador de Assembly Inventado
+Trabalho II - Simulador, Montador e Ligador de Assembly Inventado
 Porfessor: Bruno Macciavelo
 Alunos: Gabriel Frutuoso Pereira Araujo
         Gustavo Costa Crispim de Sousa
 Matrículas: 12/0050943
-            1x/xxxxxxx
+            14/0142568
 Turma: A
 
 É fornecido um arquivo Makefile para auxiliar na comiplação do trabalho.
@@ -22,4 +22,4 @@ O compilador usado neste trabalho foi o GCC versão 7.0.4 utilizando C++11. O si
 
 # Autores
 Gabriel Frutuoso Pereira Araujo - Matricula 12/0050943
-Gustavo Costa Crispim de Sousa - Matricula 1x/xxxxxxx
+Gustavo Costa Crispim de Sousa - Matricula 14/0142568
