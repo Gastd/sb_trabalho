@@ -9,7 +9,7 @@ Porfessor: Bruno Macciavelo
 Alunos: Gabriel Frutuoso Pereira Araujo
         Gustavo Sousa
 Matrículas: 12/0050943
-            1x/xxxxxxx
+            14/0142568
 Turma: A
 <!-- 
 É fornecido um arquivo Makefile para auxiliar na comiplação do trabalho.
@@ -27,4 +27,4 @@ Para rodar os testes digite no terminal:
 
 # Autores
 Gabriel Frutuoso Pereira Araujo - Matricula 12/0050943
-Gustavo Sousa - Matricula 1x/xxxxxxx
+Gustavo Sousa - Matricula 14/0142568
