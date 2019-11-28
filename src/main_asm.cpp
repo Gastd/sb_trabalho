@@ -16,7 +16,7 @@
 
 int main(int argc, char* argv[])
 {
-    // DeclaraÃ§Ã£o de VariÃ¡veis
+    // Declaracao de vairiaveis
     std::string Nome_Arquivo_Entrada;                    // arquivo de entrada .asm
     std::string Nome_Original;
     
