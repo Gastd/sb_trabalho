@@ -10,6 +10,7 @@ usr_name_tam dd 0   ; pointer to user name string
 menu db "ESCOLHA UMA OPÇÃO:",0x0d,0x0a,"- 1: SOMA",0x0d,0x0a,"- 2: SUBSTRAÇÃO",0x0d,0x0a,"- 3: MULTIPLICAÇÃO",0x0d,0x0a,"- 4: DIVISÂO",0x0d,0x0a,"- 5: MOD",0x0d,0x0a,"- 6: SAIR",0x0d,0x0a,""
 menu_tam equ $-menu
 menu_opcao dw 0
+char_getchar db 0
 
 section .text
 global _start
@@ -36,6 +37,7 @@ _start:
     call show_string
     push dword menu_opcao
     call get_menu_option
+    jmp getchar
 
 
 _exit:
@@ -77,3 +79,11 @@ divisao:
 
 mod:
     ret
+
+getchar:
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, char_getchar
+    mov edx, 1
+    int 80h
+    jmp _start
