@@ -550,12 +550,10 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 				}
 			}
 
-			/////////////////////////////////////////////////
-			//////Criando a informa�ao de realoca��o/////////
-			////////////////////////////////////////////////
+			//Realocacao
 
 
-			for(i=0;i<Cod.size();i++)										//Para isso basta verificar todos os operandos
+			for(i=0;i<Cod.size();i++)
 			{
 
 				if(Cod[i] == "+")
@@ -564,34 +562,34 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 				}
 				for(int unsigned j=0;j<operando.size();j++)
 				{
-					if(operando[j] == Cod[i])								//Procurando operando na tabela, quando encontra olha a instru��o correspondente
+					if(operando[j] == Cod[i])
 					{
-						if(inst_op[j] == "ADD")								//Verifica qual � a instru��o do opcode para verificar seu opcode correspondente e assim analisar o c�digo objeto
+						if(inst_op[j] == "ADD")
 						{
 							if(Cod[i-1] == "1")
 							{
-								realocacao.push_back(y);						//Salva o endere�o deste operando para a tabela de realoca��o
+								realocacao.push_back(y);
 							}
 						}
 						if(inst_op[j] == "SUB")
 						{
 							if(Cod[i-1] == "2")
 							{
-								realocacao.push_back(y);						//Salva o endere�o deste operando para a tabela de realoca��o
+								realocacao.push_back(y);
 							}
 						}
 						if(inst_op[j] == "MULT")
 						{
 							if(Cod[i-1] == "3")
 							{
-								realocacao.push_back(y);						//Salva o endere�o deste operando para a tabela de realoca��o
+								realocacao.push_back(y);
 							}
 						}
 						if(inst_op[j] == "DIV")
 						{
 							if(Cod[i-1] == "4")
 							{
-								realocacao.push_back(y);						//Salva o endere�o deste operando para a tabela de realoca��o
+								realocacao.push_back(y);
 							}
 						}
 						if(inst_op[j] == "JMP")
@@ -664,9 +662,7 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 
 
 
-			/////////////////////////////////////////////////////////
-			/////Substituindo as vari�veis da tabela de Uso/////////
-			////////////////////////////////////////////////////////
+			//Tabela de uso
 
 			for(i=0;i<Cod.size();i++)
 			{
@@ -680,11 +676,11 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 					if(Cod[i] == Rot_Tab_Uso[j])
 					{
 
-						Cod[i] = "0";										//Zero porque est� definido em outro m�dulo
-						Tab_Uso.push_back(Rot_Tab_Uso[j]);					//Salvando o nome da vari�vel
-						if(teve_soma == 1)									//Descontando os tokens para o caso de vetores
+						Cod[i] = "0";
+						Tab_Uso.push_back(Rot_Tab_Uso[j]);
+						if(teve_soma == 1)
 						{
-							End_Tab_Uso.push_back(i-2);						//Salvando o local onde a vari�vel est� sendo utilizada e descontando os tokens
+							End_Tab_Uso.push_back(i-2);
 						}
 						else
 						{
@@ -696,7 +692,7 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 			}
 
 
-			/////////Substituindo Vari�veis pelos seus endere�os///////
+			//Endreços solving
 
 			for(i=0;i<Cod.size();i++)
 			{
@@ -712,10 +708,7 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 
 
 
-			/////////////////////////////////////////////////////////
-			/////Atualizando os valores da Tabela de defini��o///////
-			/////////Necessario apenas se for um modulo//////////////
-			/////////////////////////////////////////////////////////
+			//Tabela de definição
 
 			if(Modulo == 1)
 			{
@@ -736,9 +729,7 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 				}
 			}
 
-			///////////////////////////////////////////////////////
-			///Substituindo os labels que trabalham com vetores////
-			///////////////////////////////////////////////////////
+		//Vetores
 
 			}
 
@@ -746,18 +737,16 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 			{
 				if(Cod[i] == "+")
 				{
-					Aux7 = stoi(Cod[i+1]);							//Passando para string para somar com o endere�o que est� em int
+					Aux7 = stoi(Cod[i+1]);
 					Aux9 = stoi(Cod[i-1]);
 					Aux7 = Aux7 + Aux9;
 					Cod[i-1] = to_string(Aux7);
-					Cod.erase(Cod.begin() + i);						//Apagando o +
-					Cod.erase(Cod.begin() + i);					//Apagando o valor somado
+					Cod.erase(Cod.begin() + i);
+					Cod.erase(Cod.begin() + i);
 				}
       }
 
-			///////////////////////////////////////////////////////////////
-			/////////////////Gerando C�digo Objeto/////////////////////////
-			///////////////////////////////////////////////////////////////
+			//Foutt
 
 
 			if(Modulo == 1)
@@ -796,6 +785,18 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 				ofstream fout;
 				fout.open(Nome_1 + ".obj");
 
+        fout<<"H: "<<Nome_1<<endl;
+
+        fout<<"H: "<<nlinha<<endl;
+
+        fout<<"H: Realocacao - ";
+
+				for(i=0;i<realocacao.size();i++)
+				{
+					fout<<realocacao[i]<<" ";
+				}
+
+        fout<<endl<<"T: ";
 				for(i=0;i<Cod.size();i++)
 				{
 					fout<<Cod[i]<<" ";
