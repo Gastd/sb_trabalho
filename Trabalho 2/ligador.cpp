@@ -1,3 +1,15 @@
+/**
+ * Unversidade de Brasilia
+ * Instituto de Ciências Exatas
+ * Departamento de Ciencia da Computaçao
+ * Software Básico - 2/2019
+ * 
+ * Trabalho II - Montador e Ligador de Assembly Inventado de ate Dois Modulos
+ * Porfessor: Bruno Macciavelo
+ * @author Gustavo Costa Crispim De Souza
+ * @author Gabriel F P Araujo
+ */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -341,7 +353,7 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
   }
   for (size_t i = 0; i < realocacao1.size(); ++i)
   {
-    std::vector<int>::iterator it = std::find(posTabelaUso1.begin(), posTabelaUso1.end(), i);
+    // std::vector<int>::iterator it = std::find(posTabelaUso1.begin(), posTabelaUso1.end(), i);
     srcCode1[realocacao1[i]] += fator_corr_A;
   }
   cout << "MOD A depois realocacao" << endl;
@@ -415,7 +427,7 @@ int main(int argc, char* argv[])
 {
     // Declaração de Variáveis
     string Nome_Arquivo_Entrada_1;
-    string Nome_Arquivo_Entrada_2;                    // arquivo de entrada .asm
+    string Nome_Arquivo_Entrada_2;                    // arquivo de entrada .obj
     string Nome_1;
     string Nome_2;
 
@@ -423,7 +435,17 @@ int main(int argc, char* argv[])
     {
         cerr << "\n \n Um programa inserido..." << endl;
         Nome_1 = argv[1];
-        Nome_Arquivo_Entrada_1 = Nome_1 + ".obj";
+        size_t obj_find = Nome_1.find(".obj");
+        if (obj_find == string::npos)
+        {
+          Nome_Arquivo_Entrada_1 = Nome_1 + ".obj";
+          // Nome_1 += ".obj";
+        }
+        else
+        {
+          Nome_Arquivo_Entrada_1 = Nome_1;
+          Nome_1 = Nome_1.substr(0, obj_find);
+        }
         cout << "opening " << Nome_Arquivo_Entrada_1 << endl;
         process(Nome_Arquivo_Entrada_1, Nome_1);
     }
@@ -433,9 +455,29 @@ int main(int argc, char* argv[])
         cerr << "\n \n Dois programas inseridos..." << endl;
         Nome_1 = argv[1];
         Nome_2 = argv[2];
-      	Nome_Arquivo_Entrada_1 = Nome_1 + ".obj";
-        Nome_Arquivo_Entrada_2 = Nome_2 + ".obj";
-
+      	size_t obj_find = Nome_1.find(".obj");
+        if (obj_find == string::npos)
+        {
+          Nome_Arquivo_Entrada_1 = Nome_1 + ".obj";
+          // Nome_1 += ".obj";
+        }
+        else
+        {
+          Nome_Arquivo_Entrada_1 = Nome_1;
+          Nome_1 = Nome_1.substr(0, obj_find);
+        }
+        
+        obj_find = Nome_2.find(".obj");
+        if (obj_find == string::npos)
+        {
+          Nome_Arquivo_Entrada_2 = Nome_2 + ".obj";
+          // Nome_2 += ".obj";
+        }
+        else
+        {
+          Nome_Arquivo_Entrada_2 = Nome_2;
+          Nome_2 = Nome_2.substr(0, obj_find);
+        }
 
       	process2(Nome_Arquivo_Entrada_1, Nome_1, Nome_Arquivo_Entrada_2, Nome_2);
 

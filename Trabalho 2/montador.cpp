@@ -1,3 +1,15 @@
+/**
+ * Unversidade de Brasilia
+ * Instituto de Ciências Exatas
+ * Departamento de Ciencia da Computaçao
+ * Software Básico - 2/2019
+ * 
+ * Trabalho II - Montador e Ligador de Assembly Inventado de ate Dois Modulos
+ * Porfessor: Bruno Macciavelo
+ * @author Gustavo Costa Crispim De Souza
+ * @author Gabriel F P Araujo
+ */
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -27,9 +39,9 @@ string noComments(string linha)
 		return(linha);
 	}
 	else if(Achado2 != string::npos){
-        cout << linha << endl;
+        // cout << linha << endl;
 		linha = linha.substr(0, Achado2);
-        cout << linha << endl;
+        // cout << linha << endl;
 		return(linha);
 	}
 	else
@@ -859,7 +871,17 @@ int main(int argc, char* argv[])
         cerr << "\n \n Um programa inserido..." << endl;
 				two=false;
         Nome_1 = argv[1];
-        Nome_Arquivo_Entrada_1 = Nome_1;
+        size_t asm_find = Nome_1.find(".asm");
+        if (asm_find == string::npos)
+        {
+          // Nome_Arquivo_Entrada_1 = Nome_1 + ".obj";
+          Nome_Arquivo_Entrada_1 = Nome_1 + ".asm";
+        }
+        else
+        {
+          Nome_Arquivo_Entrada_1 = Nome_1;
+          Nome_1 = Nome_1.substr(0, asm_find);
+        }
         cout << "opening " << Nome_Arquivo_Entrada_1 << endl;
         process(Nome_Arquivo_Entrada_1, Nome_1, two);
     }
@@ -869,8 +891,30 @@ int main(int argc, char* argv[])
         cerr << "\n \n Dois programas inseridos..." << endl;
         Nome_1 = argv[1];
         Nome_2 = argv[2];
-      	Nome_Arquivo_Entrada_1 = Nome_1;
-        Nome_Arquivo_Entrada_2 = Nome_2;
+      	size_t asm_find = Nome_1.find(".asm");
+        if (asm_find == string::npos)
+        {
+          // Nome_Arquivo_Entrada_1 = Nome_1 + ".obj";
+          Nome_Arquivo_Entrada_1 = Nome_1 + ".asm";
+        }
+        else
+        {
+          Nome_Arquivo_Entrada_1 = Nome_1;
+          Nome_1 = Nome_1.substr(0, asm_find);
+        }
+        
+
+        asm_find = Nome_2.find(".asm");
+        if (asm_find == string::npos)
+        {
+          // Nome_Arquivo_Entrada_2 = Nome_2 + ".obj";
+          Nome_Arquivo_Entrada_2 = Nome_2 + ".asm";
+        }
+        else
+        {
+          Nome_Arquivo_Entrada_2 = Nome_2;
+          Nome_2 = Nome_2.substr(0, asm_find);
+        }
 				two=true;
 
       	cout << "opening " << Nome_Arquivo_Entrada_1 << endl;
