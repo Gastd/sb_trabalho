@@ -36,15 +36,15 @@ Para usar o montador com dois modulos (dois codigos fontes)
 A saida do montador eh o <nome_do_arquivo>.obj
 
 ### Passo 2
-Para usar o ligador com apenas um unici codigo fonte
+Para usar o ligador com apenas um unico codigo fonte
 
-    $ ./ligador test.obj
+    $ ./ligador test
 ou
     $ ./ligador test.obj
 
 Para usar o ligador com dois modulos (dois codigos fontes)
 
-    $ ./ligador test_mod_a.asm test_mod_b.asm
+    $ ./ligador test_mod_a test_mod_b
 ou
     $ ./ligador test_mod_a.obj test_mod_b.obj
 
@@ -65,10 +65,12 @@ E para rodar
     $ ./calculator.elf
 
 # Obs
-A pasta testes/ contem os arquivos de testes utilizados para testar o ligador e o montador.
-O simulador feito para o Trabalho 1 esta dentro da pasta trab1-sim que tem um Makefile proprio para a construcao do simulador.
-A pasta calc/ tem a calculadora em IA-32 pedida, nela tem um script (compile.sh) que usa o NASM para compilar o .asm no
-ambiente Linux. 
+* A pasta testes/ contem os arquivos de testes utilizados para testar o ligador e o montador.
+* O simulador feito para o Trabalho 1 esta dentro da pasta trab1-sim que tem um Makefile proprio para a construcao do simulador.
+* A pasta calc/ tem a calculadora em IA-32 pedida, nela tem um script (compile.sh) que usa o NASM para compilar o .asm no
+ambiente Linux.
+* Tanto o Ligador quanto o Montador aceitam como argumentos nomes de arquivos com ou sem extensão (.asm ou .obj) o programa lida 
+com ambos os casos.
 
 # Autores
 Gabriel Frutuoso Pereira Araujo - Matricula 12/0050943
