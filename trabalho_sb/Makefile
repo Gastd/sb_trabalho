@@ -75,4 +75,4 @@ $(SIM): dirs $(OBJS) $(MAIN_OBJS) $(BIN_DIR)
 	$(CC) $(FLAGS) -o $(SIM) $(MAIN_OBJS) $(HEADERS) $(OBJECTSS)
 
 clean:
-	@rm -rf $(OBJ_DIR)/*.o $(BIN_DIR)/* *.txt
+	@rm -rf $(OBJ_DIR)/ $(BIN_DIR)/ *.txt

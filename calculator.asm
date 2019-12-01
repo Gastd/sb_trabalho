@@ -1,3 +1,14 @@
+;  Unversidade de Brasilia
+;  Instituto de Ciências Exatas
+;  Departamento de Ciencia da Computaçao
+;  Software Básico - 2/2019
+;  
+;  Trabalho II - Entrada e Saida de dados em IA-32 - Calculadora
+;  Porfessor: Bruno Macciavelo
+;  @author Gustavo Costa Crispim De Souza
+;  @author Gabriel F P Araujo
+; 
+
 section .data
 lineBreak db 0x0d,0x0a
 char_zero db 00h
