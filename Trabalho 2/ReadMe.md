@@ -50,6 +50,12 @@ ou
 
 A saida do ligador sempre eh a.out
 
+# Obs
+A pasta testes/ contem os arquivos de testes utilizados para testar o ligador e o montador.
+O simulador feito para o Trabalho 1 esta dentro da pasta tab1-sim que tem um Makefile proprio para a construcao do simulador.
+A pasta calc/ tem a calculadora em IA-32 pedida, nela tem um script (compile.sh) que usa o nasm para compilar o .asm no
+ambiente Linux. 
+
 # Autores
 Gabriel Frutuoso Pereira Araujo - Matricula 12/0050943
 Gustavo Costa Crispim de Sousa - Matricula 14/0142568
