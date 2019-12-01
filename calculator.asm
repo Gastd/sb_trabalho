@@ -86,8 +86,8 @@ calc:
     cmp byte [eax], 6
     je _exit
     ; jge getchar
-    cmp byte [eax], 0
-    jle getchar
+    ; cmp byte [eax], 0
+    ; jle getchar
     jmp getchar
 
 soma:
@@ -135,7 +135,7 @@ soma:
     push dword lineBreak
     call show_string
 
-    jmp _exit
+    jmp getchar
 
 subtracao:
     push dword op_1_ask_tam     ; show user name string
@@ -182,7 +182,7 @@ subtracao:
     push dword lineBreak
     call show_string
 
-    jmp _exit
+    jmp getchar
 
 multipl:
     push dword op_1_ask_tam     ; show user name string
@@ -230,7 +230,7 @@ multipl:
     push dword lineBreak
     call show_string
 
-    jmp _exit
+    jmp getchar
 
 divisao:
     push dword op_1_ask_tam     ; show user name string
@@ -279,7 +279,7 @@ divisao:
     push dword lineBreak
     call show_string
 
-    jmp _exit
+    jmp getchar
 
 mod:
     push dword op_1_ask_tam     ; show user name string
@@ -328,7 +328,7 @@ mod:
     push dword lineBreak
     call show_string
 
-    jmp _exit
+    jmp getchar
 
 getchar:
     mov eax, 3
