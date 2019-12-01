@@ -169,19 +169,19 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
     }
   }
 
-  cout << endl << "Tabela de Definicoes 1" << endl;
+  // cout << endl << "Tabela de Definicoes 1" << endl;
   for (auto it = tabelaDef1.begin(); it != tabelaDef1.end(); it++)
   {
-    cout << it->first << " => " << it->second << endl;
+    // cout << it->first << " => " << it->second << endl;
     tgd[it->first] = it->second;
   }
-  cout << endl;
-  cout << "Tabela de Uso 1" << endl;
-  for (size_t i = 0; i != rotTabelaUso1.size(); i++)
-  {
-    cout << rotTabelaUso1[i] << " => " << posTabelaUso1[i] << endl;
-  }
-  cout << endl;
+  // cout << endl;
+  // cout << "Tabela de Uso 1" << endl;
+  // for (size_t i = 0; i != rotTabelaUso1.size(); i++)
+  // {
+  //   cout << rotTabelaUso1[i] << " => " << posTabelaUso1[i] << endl;
+  // }
+  // cout << endl;
 
 
   cout << "opening " << Nome_Arquivo_Entrada_2 << endl;
@@ -262,33 +262,35 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
     }
   }
 
-  cout << endl << "Tabela de Definicoes 2" << endl;
+  // cout << endl << "Tabela de Definicoes 2" << endl;
   for (map<string,int>::iterator it = tabelaDef2.begin(); it != tabelaDef2.end(); it++)
   {
-    cout << it->first << " => " << it->second << endl;
+    // cout << it->first << " => " << it->second << endl;
     tgd[it->first] = it->second + fator_corr_B;
   }
 
-  cout << endl << "Tabela de Uso 2" << endl;
-  // for (map<string,int>::iterator it = tabelaUso2.begin(); it != tabelaUso2.end(); it++)
-  for (size_t i = 0; i != rotTabelaUso2.size(); i++)
-  {
-    cout << rotTabelaUso2[i] << " => " << posTabelaUso2[i] << endl;
-  }
+  // cout << endl << "Tabela de Uso 2" << endl;
+  // for (size_t i = 0; i != rotTabelaUso2.size(); i++)
+  // {
+  //   cout << rotTabelaUso2[i] << " => " << posTabelaUso2[i] << endl;
+  // }
 
-  cout << endl << "Tabela Geral de Definicoes" << endl;
-  for (map<string,int>::iterator it = tgd.begin(); it != tgd.end(); it++)
-  {
-    cout << it->first << " => " << it->second << endl;
-    // tgd[it->first] = it->second;
-  }
+  // cout << endl << "Tabela Geral de Definicoes" << endl;
+  // for (map<string,int>::iterator it = tgd.begin(); it != tgd.end(); it++)
+  // {
+  //   cout << it->first << " => " << it->second << endl;
+  // }
 
   // Condigo fonte total
-  for (long unsigned int i = 0; i < srcCode1.size(); i++)
-    cout << srcCode1[i] << " ";
-  for (long unsigned int i = 0; i < srcCode2.size(); i++)
-    cout << srcCode2[i] << " ";
-  cout << endl;
+  // for (long unsigned int i = 0; i < srcCode1.size(); i++)
+  // {
+  //   cout << srcCode1[i] << " ";
+  // }
+  // for (long unsigned int i = 0; i < srcCode2.size(); i++)
+  // {
+  //   cout << srcCode2[i] << " ";
+  // }
+  // cout << endl;
 
   if (Codigo.is_open() && Codigo2.is_open())
   {
@@ -302,7 +304,7 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
       {
         ss << linha;
         ss >> buf;
-        cout << buf << endl;
+        // cout << buf << endl;
         while (ss >> buf)
         {
           srcCode1.push_back(stoi(buf));
@@ -314,12 +316,12 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
     {
       ss.clear();
       
-      cout << linha << endl;
+      // cout << linha << endl;
       if (linha.find("T: ") != string::npos)
       {
         ss << linha;
         ss >> buf;
-        cout << buf << endl;
+        // cout << buf << endl;
         while (ss >> buf)
         {
           srcCode2.push_back(stoi(buf));
@@ -332,71 +334,71 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
   Codigo2.close();
 
   // realocacao
-  cout << "Code" << endl;
+  // cout << "Code" << endl;
   
-  cout << endl;
+  // cout << endl;
   
-  cout << endl;
+  // cout << endl;
 
   // corrigindo os valores nos codigos fontes
-  cout << "MOD A antes realocacao" << endl;
-  for (size_t i = 0; i != srcCode1.size(); i++)
-  {
-    cout << srcCode1[i] << " ";
-  }
-  cout << endl;
+  // cout << "MOD A antes realocacao" << endl;
+  // for (size_t i = 0; i != srcCode1.size(); i++)
+  // {
+  //   cout << srcCode1[i] << " ";
+  // }
+  // cout << endl;
 
   for (size_t i = 0; i != rotTabelaUso1.size(); i++)
   {
     srcCode1[posTabelaUso1[i]] = tgd[rotTabelaUso1[i]];
-    cout << "trocando o valor de " << rotTabelaUso1[i] << " em " << posTabelaUso1[i] << " por " << tgd[rotTabelaUso1[i]] << endl;
+    // cout << "trocando o valor de " << rotTabelaUso1[i] << " em " << posTabelaUso1[i] << " por " << tgd[rotTabelaUso1[i]] << endl;
   }
   for (size_t i = 0; i < realocacao1.size(); ++i)
   {
     // std::vector<int>::iterator it = std::find(posTabelaUso1.begin(), posTabelaUso1.end(), i);
     srcCode1[realocacao1[i]] += fator_corr_A;
   }
-  cout << "MOD A depois realocacao" << endl;
-  for (size_t i = 0; i != srcCode1.size(); i++)
-  {
-    cout << srcCode1[i] << " ";
-  }
-  cout << endl;
-  cout << endl;
+  // cout << "MOD A depois realocacao" << endl;
+  // for (size_t i = 0; i != srcCode1.size(); i++)
+  // {
+  //   cout << srcCode1[i] << " ";
+  // }
+  // cout << endl;
+  // cout << endl;
 
-  cout << "MOD B depois realocacao" << endl;
-  for (size_t i = 0; i != srcCode2.size(); i++)
-  {
-    cout << srcCode2[i] << " ";
-  }
-  cout << endl;
+  // cout << "MOD B depois realocacao" << endl;
+  // for (size_t i = 0; i != srcCode2.size(); i++)
+  // {
+  //   cout << srcCode2[i] << " ";
+  // }
+  // cout << endl;
   for (size_t i = 0; i != rotTabelaUso2.size(); i++)
   {
     srcCode2[posTabelaUso2[i]] += tgd[rotTabelaUso2[i]];
-    cout << "trocando o valor de " << rotTabelaUso2[i] << " em " << posTabelaUso2[i] << " por " << tgd[rotTabelaUso2[i]] << endl;
+    // cout << "trocando o valor de " << rotTabelaUso2[i] << " em " << posTabelaUso2[i] << " por " << tgd[rotTabelaUso2[i]] << endl;
   }
   for (size_t i = 0; i < realocacao2.size(); ++i)
   {
-    cout << realocacao2[i] << ": " << srcCode2[realocacao2[i]] << " " << endl;
+    // cout << realocacao2[i] << ": " << srcCode2[realocacao2[i]] << " " << endl;
     std::vector<int>::iterator it = std::find(posTabelaUso2.begin(), posTabelaUso2.end(), realocacao2[i]);
     if (it == posTabelaUso2.end())
     {
-      cout << "realocando pos " << realocacao2[i] << "por fator +=" << fator_corr_B << endl;
+      // cout << "realocando pos " << realocacao2[i] << "por fator +=" << fator_corr_B << endl;
       srcCode2[realocacao2[i]] += fator_corr_B;
     }
-    else
-    {
-      cout << "pos " << realocacao2[i] << " nao realocada, pois esta em TGD" << endl;
-    }
+    // else
+    // {
+    //   cout << "pos " << realocacao2[i] << " nao realocada, pois esta em TGD" << endl;
+    // }
 
   }
-  cout << "MOD B depois realocacao" << endl;
-  for (size_t i = 0; i != srcCode2.size(); i++)
-  {
-    cout << srcCode2[i] << " ";
-  }
-  cout << endl;
-  cout << endl;
+  // cout << "MOD B depois realocacao" << endl;
+  // for (size_t i = 0; i != srcCode2.size(); i++)
+  // {
+  //   cout << srcCode2[i] << " ";
+  // }
+  // cout << endl;
+  // cout << endl;
 
   // concatendando os codigos
   vector<int> finalCode;

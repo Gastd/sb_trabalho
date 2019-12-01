@@ -50,10 +50,24 @@ ou
 
 A saida do ligador sempre eh a.out
 
+# Calculadora em IA-32
+
+A calculadora em IA-32 esta escrita no arquivo calculator.asm, foi utilizado NASM para compilação e o GDB para depuracao.
+A calculadora performa as operacoes pedidas na especificacao exceto pela multiplicacao. No caso da multiplicacao o numero
+mostrado no terminal eh ate 32 bits, numeros maiores que isso serao mostrados de forma incorreta.
+O nome do usuario lido pode ter ate 16 caracteres.
+Para compilar a calculadora eh usado o seguinte comando:
+
+    $ ./compile.sh calculator
+
+E para rodar
+
+    $ ./calculator.elf
+
 # Obs
 A pasta testes/ contem os arquivos de testes utilizados para testar o ligador e o montador.
-O simulador feito para o Trabalho 1 esta dentro da pasta tab1-sim que tem um Makefile proprio para a construcao do simulador.
-A pasta calc/ tem a calculadora em IA-32 pedida, nela tem um script (compile.sh) que usa o nasm para compilar o .asm no
+O simulador feito para o Trabalho 1 esta dentro da pasta trab1-sim que tem um Makefile proprio para a construcao do simulador.
+A pasta calc/ tem a calculadora em IA-32 pedida, nela tem um script (compile.sh) que usa o NASM para compilar o .asm no
 ambiente Linux. 
 
 # Autores

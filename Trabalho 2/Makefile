@@ -53,3 +53,5 @@ MOT:
 	$(CC) $(FLAGS) -o $(MOT) $(MOT_SRC)
 LIG:
 	$(CC) $(FLAGS) -o $(LIG) $(LIG_SRC)
+clean:
+	@rm -rf *.obj *.txt montador ligador a.out
