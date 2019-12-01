@@ -18,9 +18,12 @@ test_tam equ $-test_str
 soma_str db "SOMA",0x0d,0x0a
 soma_str_tam equ $-soma_str
 op_1_ask db "Digite o primeiro operando",0x0d,0x0a,0x00
-op_1_ask_tam dd 5
-op_2_ask db "Digitse o segundo operando",0x0d,0x0a,0x00
-op_2_ask_tam dd 5
+op_1_ask_tam equ $-op_1_ask
+op_2_ask db "Digite o segundo operando",0x0d,0x0a,0x00
+op_2_ask_tam equ $-op_2_ask
+res_str db "Resultado ",0x0d,0x0a,0x00
+res_str_tam equ $-res_str
+TAM32B equ 10
 
 num1 db "1245",0x0a
 num1_tam equ $-num1
@@ -29,15 +32,14 @@ num2_tam equ $-num2
 
 section .bss
 usr_name resb 16
-op1 resb 10
-op2 resb 10
+op1 resb TAM32B
+op2 resb TAM32B
 
 section .text
 global _start
 
 _start:
-    sub esi, esi
-    mov ebp, esp
+    ; enter 0,0
     ; mov ecx, [esp]
     ; inc esi
     push dword usr_ask_name_tam     ; show "Hóla, " string
@@ -86,35 +88,307 @@ calc:
     ; jge getchar
     cmp byte [eax], 0
     jle getchar
+    jmp getchar
+
+soma:
+    push dword op_1_ask_tam     ; show user name string
+    push dword op_1_ask
+    mov eax, op_1_ask
+    mov ebx, op_1_ask_tam
+    call show_string
+    mov eax, op1
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op1
+    call get_num
+    push dword op1
+    call count_num
+    push dword op1
+    push dword eax
+    call LeerInteiro
+
+    push dword op_2_ask_tam     ; show user name string
+    push dword op_2_ask
+    call show_string
+    mov eax, op2
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op2
+    call get_num
+    push dword op2
+    call count_num
+    push dword op2
+    push dword eax
+    call LeerInteiro
+
+    mov ebx, op1
+    mov eax, [ebx]
+    mov ebx, op2
+    add eax, [ebx]              ; op1 + op2
+    ; push dword res_str_tam     ; show user name string
+    ; push dword res_str
+    ; call show_string
+    push dword op1
+    push eax
+    call EscreverInteiro
+    push dword 2
+    push dword lineBreak
+    call show_string
+
+    jmp _exit
+
+subtracao:
+    push dword op_1_ask_tam     ; show user name string
+    push dword op_1_ask
+    mov eax, op_1_ask
+    mov ebx, op_1_ask_tam
+    call show_string
+    mov eax, op1
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op1
+    call get_num
+    push dword op1
+    call count_num
+    push dword op1
+    push dword eax
+    call LeerInteiro
+
+    push dword op_2_ask_tam     ; show user name string
+    push dword op_2_ask
+    call show_string
+    mov eax, op2
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op2
+    call get_num
+    push dword op2
+    call count_num
+    push dword op2
+    push dword eax
+    call LeerInteiro
+
+    mov ebx, op1
+    mov eax, [ebx]
+    mov ebx, op2
+    sub eax, [ebx]              ; op1 - op2
+    ; push dword res_str_tam     ; show user name string
+    ; push dword res_str
+    ; call show_string
+    push dword op1
+    push eax
+    call EscreverInteiro
+    push dword 2
+    push dword lineBreak
+    call show_string
+
+    jmp _exit
+
+multipl:
+    push dword op_1_ask_tam     ; show user name string
+    push dword op_1_ask
+    mov eax, op_1_ask
+    mov ebx, op_1_ask_tam
+    call show_string
+    mov eax, op1
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op1
+    call get_num
+    push dword op1
+    call count_num
+    push dword op1
+    push dword eax
+    call LeerInteiro
+
+    push dword op_2_ask_tam     ; show user name string
+    push dword op_2_ask
+    call show_string
+    mov eax, op2
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op2
+    call get_num
+    push dword op2
+    call count_num
+    push dword op2
+    push dword eax
+    call LeerInteiro
+
+    mov ebx, op1
+    mov eax, [ebx]
+    mov ebx, op2
+    mov ebx, [ebx]
+    imul ebx              ; op1 * op2
+    ; push dword res_str_tam     ; show user name string
+    ; push dword res_str
+    ; call show_string
+    push dword op1
+    push eax
+    call EscreverInteiro
+    push dword 2
+    push dword lineBreak
+    call show_string
+
+    jmp _exit
+
+divisao:
+    push dword op_1_ask_tam     ; show user name string
+    push dword op_1_ask
+    mov eax, op_1_ask
+    mov ebx, op_1_ask_tam
+    call show_string
+    mov eax, op1
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op1
+    call get_num
+    push dword op1
+    call count_num
+    push dword op1
+    push dword eax
+    call LeerInteiro
+
+    push dword op_2_ask_tam     ; show user name string
+    push dword op_2_ask
+    call show_string
+    mov eax, op2
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op2
+    call get_num
+    push dword op2
+    call count_num
+    push dword op2
+    push dword eax
+    call LeerInteiro
+
+    mov ebx, op1
+    mov eax, [ebx]
+    mov ebx, op2
+    mov ebx, [ebx]              ; op1 / op2
+    sub edx, edx
+    div ebx              ; op1 / op2
+    ; push dword res_str_tam     ; show user name string
+    ; push dword res_str
+    ; call show_string
+    push dword op1
+    push eax
+    call EscreverInteiro
+    push dword 2
+    push dword lineBreak
+    call show_string
+
+    jmp _exit
+
+mod:
+    push dword op_1_ask_tam     ; show user name string
+    push dword op_1_ask
+    mov eax, op_1_ask
+    mov ebx, op_1_ask_tam
+    call show_string
+    mov eax, op1
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op1
+    call get_num
+    push dword op1
+    call count_num
+    push dword op1
+    push dword eax
+    call LeerInteiro
+
+    push dword op_2_ask_tam     ; show user name string
+    push dword op_2_ask
+    call show_string
+    mov eax, op2
+    mov ebx, TAM32B
+    push dword TAM32B
+    push dword op2
+    call get_num
+    push dword op2
+    call count_num
+    push dword op2
+    push dword eax
+    call LeerInteiro
+
+    mov ebx, op1
+    mov eax, [ebx]
+    mov ebx, op2
+    mov ebx, [ebx]              ; op1 / op2
+    sub edx, edx
+    div ebx              ; op1 / op2
+    ; push dword res_str_tam     ; show user name string
+    ; push dword res_str
+    ; call show_string
+    push dword op1
+    push edx
+    call EscreverInteiro
+    push dword 2
+    push dword lineBreak
+    call show_string
+
+    jmp _exit
+
+getchar:
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, char_getchar
+    mov edx, 1
+    int 80h
+    jmp calc
 
 _exit:
+    ; leave
     mov eax, 1
     mov ebx, 0
     int 80h
 
 show_string:
-    mov eax, [ebp + 4]
-    mov ecx, [ebp + 8]
+    ; mov eax, [ebp + 8]
+    ; mov ecx, [ebp + 12]
     sub esi, esi
+    push ebp
     mov ebp, esp
     mov eax, 4
     mov ebx, 1
-    mov ecx, [ebp + 4]
-    mov edx, [ebp + 8]
+    mov ecx, [ebp + 8]
+    mov edx, [ebp + 12]
     int 0x80
+    pop ebp
+    ret 2
+
+count_num:
+    enter 0,0
+    ; mov ebx, test_str
+    mov ebx, [ebp + 8]
+    mov edx, 0
+strLoop.num:
+    cmp byte [ebx], 0x0a
+    je countDone.num
+    cmp edx, TAM32B
+    ; cmp edx, test_tam
+    jae countDone.num
+    inc ebx
+    inc edx
+    jmp strLoop.num
+countDone.num:
+    mov eax, edx
+    leave
     ret 3
 
 show_string_lf:
     sub esi, esi
+    push ebp
     mov ebp, esp
 count_string:
     ; mov ebx, test_str
-    mov ebx, [ebp + 4]
+    mov ebx, [ebp + 8]
     mov edx, 0
 strLoop:
     cmp byte [ebx], 0x0a
     je countDone
-    cmp edx, [ebp + 8]
+    cmp edx, [ebp + 12]
     ; cmp edx, test_tam
     jae countDone
     inc ebx
@@ -128,86 +402,139 @@ countDone:
     ; mov [ebx], edx
     mov eax, 4
     mov ebx, 1
-    mov ecx, [ebp + 4]
-    ; mov edx, [ebp + 8]
+    mov ecx, [ebp + 8]
+    ; mov edx, [ebp + 12]
     int 0x80
-    ret 3
+    pop ebp
+    ret 4
 
 get_string:
     ; get stdin string
     sub esi, esi
+    push ebp
     mov ebp, esp
     mov eax, 3
     mov ebx, 0
-    mov ecx, [ebp + 4]
-    mov edx, [ebp + 8]
+    mov ecx, [ebp + 8]
+    mov edx, [ebp + 12]
     int 80h
-    ret 3
+    pop ebp
+    ret 4
 
 get_menu_option:
     sub esi, esi
+    push ebp
     mov ebp, esp
     ; get stdin number
     mov eax, 3
     mov ebx, 0
-    mov ecx, [ebp + 4]
-    mov edx, 1
+    mov ecx, [ebp + 8]
+    mov edx, 2
     int 80h
-    mov ebx, [ebp + 4]
+    mov ebx, [ebp + 8]
     mov cl, [ebx]
     sub cl, 0x30
     mov byte [ebx], cl
+    pop ebp
     ret 3
 
 get_num:
+    ; get stdin string
     sub esi, esi
+    push ebp
     mov ebp, esp
-    ; add ecx, 10
     mov eax, 3
     mov ebx, 0
-    mov ecx, [ebp + 4]
-    ; mov edx, [ebp + 8]
+    mov ecx, [ebp + 8]
+    mov edx, TAM32B
+    int 80h
+    pop ebp
+    ret 4
+
+LeerInteiro:
+    enter 0,0
+    push eax
+    mov edi, 0
+    mov eax, 0            ; Não está sendo salvo o valor de eax porque se o input foi chamado, o programador já espra encontrar ax com a quantidade de bytes lidos
+    mov ebx, [ebp+12]     ; Valor a ser convertido
+    mov ecx, [ebp+8]      ; Quantidade de bytes lidos
+    ; dec ecx
+    cmp byte [ebx], 0x2D  ; Verificando se é negativo
+    jne prox1
+    mov esi, 1            ; Setando flag de negativo
+    dec ecx
+    inc edi
+prox1:
+    cmp ecx, 0
+    jle final1
+    mov edx, eax
+    add eax, edx
+    add eax, edx
+    add eax, edx
+    add eax, edx
+    add eax, edx
+    add eax, edx
+    add eax, edx
+    add eax, edx
+    add eax, edx
+    mov edx, 0
+    mov dl, [ebx+edi]      ; Pegando o primeiro char '3' de 3104
+    sub dl, 0x30          ; '3' - 0x30
+    add eax, edx          ; Valor = Valor*10 + '3' - 0x30
+    dec ecx
+    inc edi
+    jmp prox1
+final1:
+    cmp esi, 1            ; Verificando flag do negativo
+    jne positivo1
+    neg eax
+positivo1:
+    mov esi, [ebp+12]     ; Salvando o resultado na variável 
+    mov [esi], eax
+    pop eax
+    leave
+    ret 4
+
+
+EscreverInteiro:
+    enter 0,0
+    mov edi, 0
+    mov esi, 10
+    mov eax, [ebp+8]
+    mov ebx, [ebp+12]
+    mov ecx, 0
+    cmp eax, 0
+    jge prox2
+    neg eax
+    mov edi, 1
+prox2:
+    mov edx, 0
+    div esi
+    add edx, 0x30
+    mov byte [ebx + ecx], dl
+    cmp eax, 0
+    je final2
+    inc ecx
+    jmp prox2
+final2:
+    cmp edi, 1
+    jne positivo2
+    inc ecx
+    mov byte [ebx + ecx], 0x2D
+positivo2:
+    push ecx
+    add ecx, ebx
+    push ebx
+    mov eax, 4
+    mov ebx, 1
     mov edx, 1
     int 80h
-    ret 3
-
-soma:
-    push dword op_1_ask_tam     ; show user name string
-    push dword op_1_ask
-    mov eax, op_1_ask
-    mov ebx, op_1_ask_tam
-    call show_string
-    ; push dword 10
-    push dword op1
-    call get_num
-
-    push dword op_2_ask_tam     ; show user name string
-    push dword op_2_ask
-    call show_string
-    push dword op2
-    call get_num
-
-    mov eax, op1
-    add eax, op2
-
-    jmp getchar
-
-subtracao:
-    jmp getchar
-
-multipl:
-    jmp getchar
-
-divisao:
-    jmp getchar
-
-mod:
-    jmp getchar
-
-getchar:
-    mov eax, 3
-    mov ebx, 0
-    mov ecx, char_getchar
-    mov edx, 1
-    int 80h
-    jmp calc
+    pop ebx
+    pop ecx
+    dec ecx
+    cmp ecx, 0
+    jl termino2
+    jmp positivo2
+termino2:
+    leave
+    ret 4
