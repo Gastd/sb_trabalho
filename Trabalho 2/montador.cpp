@@ -19,15 +19,17 @@ string removeSpaces(string str)
 
 string noComments(string linha)
 {
-	size_t Achado = linha.find_first_of("#");
-	size_t Achado2 = linha.find_first_of(";");
+	size_t Achado = linha.find_first_of('#');
+	size_t Achado2 = linha.find_first_of(';');
 	if(Achado != string::npos)
 	{
 		linha = linha.substr(0, Achado);
 		return(linha);
 	}
 	else if(Achado2 != string::npos){
-		linha = linha.substr(0, Achado);
+        cout << linha << endl;
+		linha = linha.substr(0, Achado2);
+        cout << linha << endl;
 		return(linha);
 	}
 	else
@@ -188,8 +190,6 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 	  {
 	    while(getline(Codigo,linha))
 	    {
-        linha = noComments(linha);
-		linha = Maiusculo(linha);
 
         if ((linha.find("ADD")!=string::npos)||(linha.find("SUB")!=string::npos)||(linha.find("MULT")!=string::npos)||(linha.find("DIV")!=string::npos)||(linha.find("JMP")!=string::npos)||(linha.find("JMPN")!=string::npos)||(linha.find("JMPP")!=string::npos)||(linha.find("JMPZ")!=string::npos)||(linha.find("LOAD")!=string::npos)||(linha.find("STORE")!=string::npos)||(linha.find("INPUT")!=string::npos)||(linha.find("OUTPUT")!=string::npos)){
           nlinha = nlinha + 2;
@@ -205,6 +205,8 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
           continue;
         }
 
+        linha = noComments(linha);
+		linha = Maiusculo(linha);
 
 	      size_t begin_find = linha.find("BEGIN");
 	      size_t end_find = linha.find("END");
@@ -341,15 +343,20 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 
         if(Cod[i] == "SPACE")
 				{
+                    try
+                    {
+                    // cout << Cod.at(i+1) << endl;
+					if(!isalpha(Cod.at(i+1).at(0))){
+                        x = x + stoi(Cod[i+1]);
+                    }
+                    else{
+                        x++;
+                    }
+                    }
+                    catch(...)
+                    {
 
-					if(!isalpha(Cod[i+1][0])){
-            x = x + stoi(Cod[i+1]);
-          }
-
-          else{
-            x++;
-          }
-
+                    }
 				}
 
 				if(Cod[i] == "CONST")
