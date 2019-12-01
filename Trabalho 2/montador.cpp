@@ -440,7 +440,6 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
                   break;
 
                 case 2:
-
                   Cod[i] = "0 0";
                   break;
 
@@ -451,6 +450,22 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
                 case 4:
                   Cod[i] = "0 0 0 0";
                   break;
+
+                default:
+                    // cout << "zeros > 4" << endl;
+                    int n_zeros = stoi(Cod[i]);
+                    if(n_zeros < 0) break;
+                    string str_aux;
+                    str_aux = "";
+                    for(int count = 0; count < n_zeros; count++)
+                    {
+                        if (count < (n_zeros - 1))
+                            str_aux += "0 ";
+                        else
+                            str_aux += "0";
+                    }
+                    Cod[i] = str_aux.c_str();
+                    break;
               }
 
 						}
@@ -820,7 +835,7 @@ int main(int argc, char* argv[])
         cerr << "\n \n Um programa inserido..." << endl;
 				two=false;
         Nome_1 = argv[1];
-        Nome_Arquivo_Entrada_1 = Nome_1 + ".asm";
+        Nome_Arquivo_Entrada_1 = Nome_1;
         cout << "opening " << Nome_Arquivo_Entrada_1 << endl;
         process(Nome_Arquivo_Entrada_1, Nome_1, two);
     }
@@ -830,8 +845,8 @@ int main(int argc, char* argv[])
         cerr << "\n \n Dois programas inseridos..." << endl;
         Nome_1 = argv[1];
         Nome_2 = argv[2];
-      	Nome_Arquivo_Entrada_1 = Nome_1 + ".asm";
-        Nome_Arquivo_Entrada_2 = Nome_2 + ".asm";
+      	Nome_Arquivo_Entrada_1 = Nome_1;
+        Nome_Arquivo_Entrada_2 = Nome_2;
 				two=true;
 
       	cout << "opening " << Nome_Arquivo_Entrada_1 << endl;
