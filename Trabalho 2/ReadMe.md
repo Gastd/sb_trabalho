@@ -38,7 +38,7 @@ A saida do montador eh o <nome_do_arquivo>.obj
 ### Passo 2
 Para usar o ligador com apenas um unici codigo fonte
 
-    $ ./ligador test.asm.obj
+    $ ./ligador test.obj
 ou
     $ ./ligador test.obj
 
