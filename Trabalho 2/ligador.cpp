@@ -321,16 +321,9 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
 
   // realocacao
   cout << "Code" << endl;
-  for (size_t i = 0; i < realocacao1.size(); ++i)
-  {
-    srcCode1[realocacao1[i]] += fator_corr_A;
-  }
+  
   cout << endl;
-  for (size_t i = 0; i < realocacao2.size(); ++i)
-  {
-    // cout << srcCode2[i] << " ";
-    srcCode2[realocacao2[i]] += fator_corr_B;
-  }
+  
   cout << endl;
 
   // corrigindo os valores nos codigos fontes
@@ -345,6 +338,11 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
   {
     srcCode1[posTabelaUso1[i]] = tgd[rotTabelaUso1[i]];
     cout << "trocando o valor de " << rotTabelaUso1[i] << " em " << posTabelaUso1[i] << " por " << tgd[rotTabelaUso1[i]] << endl;
+  }
+  for (size_t i = 0; i < realocacao1.size(); ++i)
+  {
+    std::vector<int>::iterator it = std::find(posTabelaUso1.begin(), posTabelaUso1.end(), i);
+    srcCode1[realocacao1[i]] += fator_corr_A;
   }
   cout << "MOD A depois realocacao" << endl;
   for (size_t i = 0; i != srcCode1.size(); i++)
@@ -362,8 +360,23 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
   cout << endl;
   for (size_t i = 0; i != rotTabelaUso2.size(); i++)
   {
-    srcCode2[posTabelaUso2[i]] = tgd[rotTabelaUso2[i]];
+    srcCode2[posTabelaUso2[i]] += tgd[rotTabelaUso2[i]];
     cout << "trocando o valor de " << rotTabelaUso2[i] << " em " << posTabelaUso2[i] << " por " << tgd[rotTabelaUso2[i]] << endl;
+  }
+  for (size_t i = 0; i < realocacao2.size(); ++i)
+  {
+    cout << realocacao2[i] << ": " << srcCode2[realocacao2[i]] << " " << endl;
+    std::vector<int>::iterator it = std::find(posTabelaUso2.begin(), posTabelaUso2.end(), realocacao2[i]);
+    if (it == posTabelaUso2.end())
+    {
+      cout << "realocando pos " << realocacao2[i] << "por fator +=" << fator_corr_B << endl;
+      srcCode2[realocacao2[i]] += fator_corr_B;
+    }
+    else
+    {
+      cout << "pos " << realocacao2[i] << " nao realocada, pois esta em TGD" << endl;
+    }
+
   }
   cout << "MOD B depois realocacao" << endl;
   for (size_t i = 0; i != srcCode2.size(); i++)

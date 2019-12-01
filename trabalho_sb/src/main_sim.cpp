@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <string>
+#include <stdio.h>
 #include "simulator.h"
 
 int main(int argc, char *argv[])
@@ -33,6 +34,11 @@ int main(int argc, char *argv[])
 
     sbasm.loadMemory(text_path);
 
+    // while(1)
+    // {
+    //     sbasm.step();
+    //     getchar();
+    // }
     sbasm.run();
     if(dump_reg)
         sbasm.dump_reg('h');

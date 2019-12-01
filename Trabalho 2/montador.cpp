@@ -53,7 +53,7 @@ string Maiusculo(string linha)
 
 void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool two)
 {
-  vector <string> Cod;
+    vector <string> Cod;
 	vector <string> Rotulos2;
 	vector <string> tokens;
 	vector<string> operando;
@@ -66,16 +66,16 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 	vector <int> realocacao;
 	vector<int> End_Tab_Uso;
 	vector<int> End_Tab_Def;
-  vector<int> operando_ln;
+    vector<int> operando_ln;
 
 	int Num=0, x=0, Aux7=0, Aux9=0, y=0, Modulo=0, teve_soma=0, teve_public=0, nlinha = 0;
     int memory_data = 0;
 	int unsigned i = 0;
 
-  string linha;
+    string linha;
 	string Aux3;
 	string Aux4;
-  string Aux5;
+    string Aux5;
 	string buf;
 
 	if (two==false){
@@ -88,8 +88,12 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 	  {
 	    while(getline(Codigo,linha))
 	    {
+        linha = noComments(linha);
+		linha = Maiusculo(linha);
 
-        if ((linha.find("ADD")!=string::npos)||(linha.find("SUB")!=string::npos)||(linha.find("MULT")!=string::npos)||(linha.find("DIV")!=string::npos)||(linha.find("JMP")!=string::npos)||(linha.find("JMPN")!=string::npos)||(linha.find("JMPP")!=string::npos)||(linha.find("JMPZ")!=string::npos)||(linha.find("LOAD")!=string::npos)||(linha.find("STORE")!=string::npos)||(linha.find("INPUT")!=string::npos)||(linha.find("OUTPUT")!=string::npos)){
+        if ((linha.find("ADD")!=string::npos)||(linha.find("SUB")!=string::npos)||(linha.find("MULT")!=string::npos)||(linha.find("DIV")!=string::npos)||
+            (linha.find("JMP")!=string::npos)||(linha.find("JMPN")!=string::npos)||(linha.find("JMPP")!=string::npos)||(linha.find("JMPZ")!=string::npos)||
+            (linha.find("LOAD")!=string::npos)||(linha.find("STORE")!=string::npos)||(linha.find("INPUT")!=string::npos)||(linha.find("OUTPUT")!=string::npos)){
           nlinha = nlinha + 2;
         }
         if(linha.find("COPY")!=string::npos){
@@ -98,10 +102,12 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
         if(linha.find("STOP")!=string::npos){
           nlinha++;
         }
+        // cout << linha << endl;
+        if((linha.find("SECTION TEXT")!=string::npos)||(linha.find("SECTION DATA")!=string::npos)){
+          continue;
+        }
 
 
-        linha = noComments(linha);
-				linha = Maiusculo(linha);
 
 	      size_t begin = linha.find("BEGIN");
 	      size_t end = linha.find("END");
@@ -182,6 +188,8 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 	  {
 	    while(getline(Codigo,linha))
 	    {
+        linha = noComments(linha);
+		linha = Maiusculo(linha);
 
         if ((linha.find("ADD")!=string::npos)||(linha.find("SUB")!=string::npos)||(linha.find("MULT")!=string::npos)||(linha.find("DIV")!=string::npos)||(linha.find("JMP")!=string::npos)||(linha.find("JMPN")!=string::npos)||(linha.find("JMPP")!=string::npos)||(linha.find("JMPZ")!=string::npos)||(linha.find("LOAD")!=string::npos)||(linha.find("STORE")!=string::npos)||(linha.find("INPUT")!=string::npos)||(linha.find("OUTPUT")!=string::npos)){
           nlinha = nlinha + 2;
@@ -192,9 +200,11 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
         if(linha.find("STOP")!=string::npos){
           nlinha++;
         }
+        // cout << linha << endl;
+        if((linha.find("SECTION TEXT")!=string::npos)||(linha.find("SECTION DATA")!=string::npos)){
+          continue;
+        }
 
-	      linha = noComments(linha);
-				linha = Maiusculo(linha);
 
 	      size_t begin_find = linha.find("BEGIN");
 	      size_t end_find = linha.find("END");
@@ -474,9 +484,10 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
                           break;
                         }
 					}
-            else{
-              Cod[i] = "0";
-            }
+                    else{
+                        Cod.insert(Cod.begin() + i, "0");
+                      // Cod[i] = "0";
+                    }
 					goto Recomecar;
 				}
 				if(Cod[i] == "CONST")
