@@ -43,7 +43,7 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1)
 
   ofstream fout;
 
-  fout.open(Nome_1 + "_final.obj");
+  fout.open("a.out");
 
   for(i=0;i<Cod.size();i++)
   {
