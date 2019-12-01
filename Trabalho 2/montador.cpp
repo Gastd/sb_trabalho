@@ -69,6 +69,7 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
   vector<int> operando_ln;
 
 	int Num=0, x=0, Aux7=0, Aux9=0, y=0, Modulo=0, teve_soma=0, teve_public=0, nlinha = 0;
+    int memory_data = 0;
 	int unsigned i = 0;
 
   string linha;
@@ -431,44 +432,48 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 				if(Cod[i] == "SPACE")
 				{
 					Cod.erase(Cod.begin() + i);
+                    memory_data++;
+					if(!isalpha(Cod[i][0]))				//Preenchendo com 0's onde ficava a diretiva SPACE e onde ficava o operando
+					{
+                      switch (stoi(Cod[i])){
+                        case 1:
+                          Cod[i] = "0";
+                          // memory_data++;
+                          break;
 
-						if(!isalpha(Cod[i][0]))				//Preenchendo com 0's onde ficava a diretiva SPACE e onde ficava o operando
-						{
-              switch (stoi(Cod[i])){
-                case 1:
-                  Cod[i] = "0";
-                  break;
+                        case 2:
+                          Cod[i] = "0 0";
+                          memory_data += 1;
+                          break;
 
-                case 2:
-                  Cod[i] = "0 0";
-                  break;
+                        case 3:
+                          Cod[i] = "0 0 0";
+                          memory_data += 2;
+                          break;
 
-                case 3:
-                  Cod[i] = "0 0 0";
-                  break;
+                        case 4:
+                          Cod[i] = "0 0 0 0";
+                          memory_data += 3;
+                          break;
 
-                case 4:
-                  Cod[i] = "0 0 0 0";
-                  break;
-
-                default:
-                    // cout << "zeros > 4" << endl;
-                    int n_zeros = stoi(Cod[i]);
-                    if(n_zeros < 0) break;
-                    string str_aux;
-                    str_aux = "";
-                    for(int count = 0; count < n_zeros; count++)
-                    {
-                        if (count < (n_zeros - 1))
-                            str_aux += "0 ";
-                        else
-                            str_aux += "0";
-                    }
-                    Cod[i] = str_aux.c_str();
-                    break;
-              }
-
-						}
+                        default:
+                          // cout << "zeros > 4" << endl;
+                          int n_zeros = stoi(Cod[i]);
+                          memory_data += n_zeros - 1;
+                          if(n_zeros < 0) break;
+                          string str_aux;
+                          str_aux = "";
+                          for(int count = 0; count < n_zeros; count++)
+                          {
+                              if (count < (n_zeros - 1))
+                                  str_aux += "0 ";
+                              else
+                                  str_aux += "0";
+                          }
+                          Cod[i] = str_aux.c_str();
+                          break;
+                        }
+					}
             else{
               Cod[i] = "0";
             }
@@ -478,6 +483,7 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 				{
 					Cod.erase(Cod.begin() + i);
 					Cod.erase(Cod.begin() + i - 1);
+                    memory_data++;
 					i--;
 					if(Cod[i].size() > 2)
 					{
@@ -768,11 +774,11 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 			{
 				ofstream fout;
 				fout.open(Nome_1 + ".obj");
-        fout<<"H: "<<Nome_1<<endl;
+        fout << "H: "<<Nome_1<<endl;
 
-        fout<<"H: "<<nlinha<<endl;
+        fout << "H: " << nlinha + memory_data << endl;
 
-        fout<<"H: Realocacao - ";
+        fout << "H: Realocacao - ";
 				for(i=0;i<realocacao.size();i++)
 				{
 					fout<<realocacao[i]<<" ";
@@ -802,7 +808,7 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, bool tw
 
         fout<<"H: "<<Nome_1<<endl;
 
-        fout<<"H: "<<nlinha<<endl;
+        fout<<"H: " << nlinha + memory_data << endl;
 
         fout<<"H: Realocacao - ";
 

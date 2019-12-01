@@ -7,7 +7,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <iomanip>
-#include <string.h>
+#include <cstring>
 #include <map>
 
 using namespace std;
@@ -53,17 +53,23 @@ void process(const string& Nome_Arquivo_Entrada_1, const string& Nome_1)
 
 void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const string& Nome_Arquivo_Entrada_2, const string& Nome_2)
 {
-  string linha;
 
   vector<string> Cod1;
   vector<string> Cod2;
   
   vector<int> realocacao1, realocacao2;
+  vector<int> srcCode1, srcCode2;
   map<string, int> tabelaDef1, tabelaDef2;
-  vector<vector<string>> tabelaUso1, tabelaUso2;
-  vector<vector<string>> tgd; // Tabela Geral de Definicoes
-  bool tabDef = false;
-  bool tabUso = false;
+  map<string, int> tabelaUso1, tabelaUso2;
+  vector<string> rotTabelaUso1, rotTabelaUso2;
+  vector<int> posTabelaUso1, posTabelaUso2;
+  map<string, int> tgd; // Tabela Geral de Definicoes
+  bool tabDef1 = false;
+  bool tabDef2 = false;
+  bool tabUso1 = false;
+  bool tabUso2 = false;
+  int fator_corr_A = 0;
+  int fator_corr_B = 0;
 
   int unsigned i = 0;
   int cod1_size=0;
@@ -81,26 +87,21 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
 
   if(Codigo.is_open())
   {
+    string linha;
     while(getline(Codigo,linha))
     {
       if (linha.find("H: Tabela de definicoes") != string::npos)
       {
-        tabDef = true;
-        tabUso = false;
+        tabDef1 = true;
+        tabUso1 = false;
         continue;
       }
 
       if (linha.find("H: Tabela de Uso") != string::npos)
       {
-        tabUso = true;
-        tabDef = false;
+        tabUso1 = true;
+        tabDef1 = false;
         continue;
-      }
-
-      if (linha.find("T: ") != string::npos)
-      {
-        tabUso = false;
-        tabDef = false;
       }
 
       if (i == 1)
@@ -110,6 +111,7 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
         ss >> buf;
         cod1_size = stoi(buf);
         cout << "Tamanho do arquivo " << cod1_size << endl;
+        fator_corr_B = cod1_size;
       }
 
       if (i == 2) // info de realocacao
@@ -124,19 +126,7 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
         }
       }
 
-      if (tabUso)
-      {
-        ss << linha;
-        ss >> buf;
-        vector<string> vec_aux;
-        while (ss >> buf)
-        {
-          vec_aux.push_back(buf);
-        }
-        tabelaUso1.push_back(vec_aux);
-      }
-
-      if (tabDef)
+      if (tabUso1)
       {
         ss << linha;
         ss >> buf; // remove "H: "
@@ -145,8 +135,20 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
         if (key.size() == 0)  break;
         ss >> buf; // get value
         int value = stoi(buf);
-        cout << linha << endl;
-        cout << "key = " << key << " value = " << value << endl;
+        tabelaUso1[key] = value;
+        rotTabelaUso1.push_back(key);
+        posTabelaUso1.push_back(value);
+      }
+
+      if (tabDef1)
+      {
+        ss << linha;
+        ss >> buf; // remove "H: "
+        string key;
+        ss >> key; // get key
+        if (key.size() == 0)  break;
+        ss >> buf; // get value
+        int value = stoi(buf);
         tabelaDef1[key] = value;
       }
 
@@ -155,25 +157,20 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
     }
   }
 
-  cout << endl << "Tabela de Definicoes" << endl;
+  cout << endl << "Tabela de Definicoes 1" << endl;
   for (auto it = tabelaDef1.begin(); it != tabelaDef1.end(); it++)
   {
     cout << it->first << " => " << it->second << endl;
+    tgd[it->first] = it->second;
   }
   cout << endl;
-  cout << "Tabela de Uso" << endl;
-  for (long unsigned int i = 0; i < tabelaUso1.size(); i++)
+  cout << "Tabela de Uso 1" << endl;
+  for (size_t i = 0; i != rotTabelaUso1.size(); i++)
   {
-    for (long unsigned int j = 0; j < tabelaUso1.at(i).size(); j++)
-    {
-      cout << tabelaUso1.at(i).at(j);
-      cout << " ";
-    }
-    cout << endl;
+    cout << rotTabelaUso1[i] << " => " << posTabelaUso1[i] << endl;
   }
   cout << endl;
 
-  Codigo.close();
 
   cout << "opening " << Nome_Arquivo_Entrada_2 << endl;
 
@@ -183,26 +180,21 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
 
   if(Codigo2.is_open())
   {
+    string linha;
     while(getline(Codigo2,linha))
     {
       if (linha.find("H: Tabela de definicoes") != string::npos)
       {
-        tabDef = true;
-        tabUso = false;
+        tabDef2 = true;
+        tabUso2 = false;
         continue;
       }
 
       if (linha.find("H: Tabela de Uso") != string::npos)
       {
-        tabUso = true;
-        tabDef = false;
+        tabUso2 = true;
+        tabDef2 = false;
         continue;
-      }
-
-      if (linha.find("T: ") != string::npos)
-      {
-        tabUso = false;
-        tabDef = false;
       }
 
       if (i == 1)
@@ -211,7 +203,8 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
         ss >> buf;
         ss >> buf;
         cod2_size = stoi(buf);
-        cout << cod2_size << endl;
+        cout << "Tamanho do arquivo " << cod2_size << endl;
+        // fator_corr_A = cod2_size + 1;
       }
 
       if (i == 2) // info de realocacao
@@ -226,19 +219,21 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
         }
       }
 
-      if (tabUso)
+      if (tabUso2)
       {
         ss << linha;
-        ss >> buf;
-        vector<string> vec_aux;
-        while (ss >> buf)
-        {
-          vec_aux.push_back(buf);
-        }
-        tabelaUso2.push_back(vec_aux);
+        ss >> buf; // remove "H: "
+        string key;
+        ss >> key; // get key
+        if (key.size() == 0)  break;
+        ss >> buf; // get value
+        int value = stoi(buf);
+        tabelaUso2[key] = value;
+        rotTabelaUso2.push_back(key);
+        posTabelaUso2.push_back(value);
       }
 
-      if (tabDef)
+      if (tabDef2)
       {
         ss << linha;
         ss >> buf; // remove "H: "
@@ -255,23 +250,152 @@ void process2(const string& Nome_Arquivo_Entrada_1, const string& Nome_1, const 
     }
   }
 
-  cout << endl << "Tabela de Definicoes" << endl;
-  for (auto it = tabelaDef2.begin(); it != tabelaDef2.end(); it++)
+  cout << endl << "Tabela de Definicoes 2" << endl;
+  for (map<string,int>::iterator it = tabelaDef2.begin(); it != tabelaDef2.end(); it++)
   {
     cout << it->first << " => " << it->second << endl;
+    tgd[it->first] = it->second + fator_corr_B;
   }
 
-  cout << endl << "Tabela de Uso" << endl;
-  for (long unsigned int i = 0; i < tabelaUso2.size(); i++)
+  cout << endl << "Tabela de Uso 2" << endl;
+  // for (map<string,int>::iterator it = tabelaUso2.begin(); it != tabelaUso2.end(); it++)
+  for (size_t i = 0; i != rotTabelaUso2.size(); i++)
   {
-    for (long unsigned int j = 0; j < tabelaUso2.at(i).size(); j++)
-    {
-      cout << tabelaUso2.at(i).at(j);
-      cout << " ";
-    }
-    cout << endl;
+    cout << rotTabelaUso2[i] << " => " << posTabelaUso2[i] << endl;
   }
+
+  cout << endl << "Tabela Geral de Definicoes" << endl;
+  for (map<string,int>::iterator it = tgd.begin(); it != tgd.end(); it++)
+  {
+    cout << it->first << " => " << it->second << endl;
+    // tgd[it->first] = it->second;
+  }
+
+  // Condigo fonte total
+  for (long unsigned int i = 0; i < srcCode1.size(); i++)
+    cout << srcCode1[i] << " ";
+  for (long unsigned int i = 0; i < srcCode2.size(); i++)
+    cout << srcCode2[i] << " ";
+  cout << endl;
+
+  if (Codigo.is_open() && Codigo2.is_open())
+  {
+    string linha;
+
+    while(getline(Codigo, linha))
+    {
+      ss.clear();
+
+      if (linha.find("T: ") != string::npos)
+      {
+        ss << linha;
+        ss >> buf;
+        cout << buf << endl;
+        while (ss >> buf)
+        {
+          srcCode1.push_back(stoi(buf));
+        }
+      }
+    }
+
+    while(getline(Codigo2, linha))
+    {
+      ss.clear();
+      
+      cout << linha << endl;
+      if (linha.find("T: ") != string::npos)
+      {
+        ss << linha;
+        ss >> buf;
+        cout << buf << endl;
+        while (ss >> buf)
+        {
+          srcCode2.push_back(stoi(buf));
+        }
+      }
+    }
+  }
+
+  Codigo.close();
   Codigo2.close();
+
+  // realocacao
+  cout << "Code" << endl;
+  for (size_t i = 0; i < realocacao1.size(); ++i)
+  {
+    srcCode1[realocacao1[i]] += fator_corr_A;
+  }
+  cout << endl;
+  for (size_t i = 0; i < realocacao2.size(); ++i)
+  {
+    // cout << srcCode2[i] << " ";
+    srcCode2[realocacao2[i]] += fator_corr_B;
+  }
+  cout << endl;
+
+  // corrigindo os valores nos codigos fontes
+  cout << "MOD A antes realocacao" << endl;
+  for (size_t i = 0; i != srcCode1.size(); i++)
+  {
+    cout << srcCode1[i] << " ";
+  }
+  cout << endl;
+
+  for (size_t i = 0; i != rotTabelaUso1.size(); i++)
+  {
+    srcCode1[posTabelaUso1[i]] = tgd[rotTabelaUso1[i]];
+    cout << "trocando o valor de " << rotTabelaUso1[i] << " em " << posTabelaUso1[i] << " por " << tgd[rotTabelaUso1[i]] << endl;
+  }
+  cout << "MOD A depois realocacao" << endl;
+  for (size_t i = 0; i != srcCode1.size(); i++)
+  {
+    cout << srcCode1[i] << " ";
+  }
+  cout << endl;
+  cout << endl;
+
+  cout << "MOD B depois realocacao" << endl;
+  for (size_t i = 0; i != srcCode2.size(); i++)
+  {
+    cout << srcCode2[i] << " ";
+  }
+  cout << endl;
+  for (size_t i = 0; i != rotTabelaUso2.size(); i++)
+  {
+    srcCode2[posTabelaUso2[i]] = tgd[rotTabelaUso2[i]];
+    cout << "trocando o valor de " << rotTabelaUso2[i] << " em " << posTabelaUso2[i] << " por " << tgd[rotTabelaUso2[i]] << endl;
+  }
+  cout << "MOD B depois realocacao" << endl;
+  for (size_t i = 0; i != srcCode2.size(); i++)
+  {
+    cout << srcCode2[i] << " ";
+  }
+  cout << endl;
+  cout << endl;
+
+  // concatendando os codigos
+  vector<int> finalCode;
+  finalCode.resize(cod1_size + cod2_size);
+  cout << endl << finalCode.size() << endl;
+
+  for(size_t i = 0; i < srcCode1.size(); i++)
+  {
+    finalCode[i] = srcCode1[i];
+  }
+  for(size_t i = 0; i < srcCode2.size(); i++)
+  {
+    finalCode[i + cod1_size] = srcCode2[i];
+    // cout << i<< " " << finalCode[i+ cod1_size] << " " << endl;
+  }
+  // cout << endl << finalCode.size() << endl;
+
+  ofstream executavel("a.out");
+  for(size_t i = 0; i < finalCode.size(); i++)
+  {
+    executavel << finalCode[i] << " ";
+  }
+  executavel << endl;
+
 }
 
 int main(int argc, char* argv[])
